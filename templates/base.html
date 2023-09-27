@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoML - Dataset's Reports</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/automl-2.webp') }}" type="image/x-icon">
+    <!-- Corrected usage of url_for for static files -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet" id="bootstrapCSS">
+    <!--fontawesome cnd-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" id="fontawesomeCSS">
+</head>
+
+<body>
+    <nav class="navbar bg-body-tertiary" style="background-color: #d4d5d5;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('home') }}">
+                <img src="{{ url_for('static',filename='img/icon_automl.png') }}" alt="Logo" width="80" height="30" class="d-inline-block align-text-top">
+            </a>
+            <a href="{{url_for('generate_and_display_profile')}}" style="float: right;background: #332f2f;color: aliceblue;margin: 10px;" class="btn btn-outline-info" id="reportsBtn">Dataset's Reports</a>
+        </div>
+    </nav>
+
+    {% block maincontents %} data {% endblock %}
+    <!-- Remove the container if you want to extend the Footer to full width. -->
+    <div class="">
+
+        <footer class="text-center text-white" style="background-color: #f1f1f1;">
+            <!-- Grid container -->
+            <div class="container pt-1">
+                <!-- Section: Social media -->
+                <section class="mb-4">
+                    <!-- Twitter -->
+                    <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="https://twitter.com/Actgupta" role="button" data-mdb-ripple-color="dark" target="_blank"><i class="fab fa-twitter"></i></a>
+
+                    <!-- Google -->
+                    <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="https://rishucareerblogstechnology12.pythonanywhere.com/about/about-me/" role="button" data-mdb-ripple-color="dark" target="_blank"><i class="fab fa-google"></i></a>
+
+                    <!-- Linkedin -->
+                    <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="https://www.linkedin.com/in/rishu-kumar-gupta-058737217/" role="button" data-mdb-ripple-color="dark" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <!-- Github -->
+                    <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="https://github.com/rkgupta7463" role="button" data-mdb-ripple-color="dark" target="_blank"><i class="fab fa-github"></i></a>
+                </section>
+                <!-- Section: Social media -->
+            </div>
+            <!-- Grid container -->
+
+            <!-- Copyright -->
+            <div class="text-center text-dark p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+                © 2023 Copyright:
+                <a class="text-dark" href="#" style="text-decoration: none;"><span
+                        style="color: white;font-size: larger;">Rishu Kumar Gupta </span>|<span
+                        style="color: #d58010;font-weight: bolder;font-size: larger;"> AutoML</span></a>
+            </div>
+            <!-- Copyright -->
+        </footer>
+
+    </div>
+    <!-- End of .container -->
+
+    <!--scripts files-->
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <!-- <script src="{{ url_for('static', filename='js/logic.js') }}"></script> -->
+</body>
+
+</html>

@@ -1,0 +1,138 @@
+{% extends "base.html" %} {% block maincontents %}
+<style>
+    /* Apply CSS style to make the table scrollable */
+    
+    .table-responsive {
+        max-height: 280px;
+        /* Set the maximum height */
+        overflow-y: auto;
+        /* Enable vertical scrollbar */
+    }
+</style>
+
+<div class="container">
+    <h4 class="text-center">AutoML System Application</h4>
+    <div class="contain">
+        <form action="{{url_for('home')}}" method="post" onsubmit="return validateForm()" enctype="multipart/form-data">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" name="name" required>
+                <label for="floatingInputGrid">Project Title</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="file" class="form-control" name="csvFile" id="csvFile" accept=".csv, .xlsx, .xls" required>
+                <label for="csvFile">Upload CSV file</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" name="targetcol" required>
+                <label for="floatingInputGrid">Target Column Name</label>
+            </div>
+            <div class="form-floating">
+                <select class="form-select" id="problemType" name="problemType" required>
+                        <option selected>Open this select menu</option>
+                        <option value="Regression">Regression</option>
+                        <option value="Classification">Classification</option>
+                        <option value="Other">Other</option>
+                    </select>
+                <label for="problemType">Select Problems</label>
+            </div>
+
+            <button type="submit" class="btn btn-success my-2">Submit</button>
+        </form>
+    </div>
+</div>
+
+
+<!-- Display the CSV data in a responsive table -->
+
+{% if table is not none %}
+<div class="container">
+    <h5 class="text-center">Your DataSet</h5>
+    <hr>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    {% for col in table.columns %}
+                    <th>{{ col }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in table.values %}
+                <tr>
+                    {% for val in row %}
+                    <td>{{ val }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <a href="{{ url_for('chat_datasets') }}" class="btn btn-outline-info" style="margin: auto;margin-top: auto;margin-bottom: auto;display: block;width: 250px;margin-top: 10px;margin-bottom: 15px;">Query About Your Dataset's</a>
+</div>
+{% endif %}
+
+<!--##evaluation of classification reports-->
+
+{% if problem_type is not none %}{% if problem_type=='Classification' %} {% if prediction_report is not none %}
+<div class="container">
+    <h4 class="text-center" style="margin: 30px;">Classification Report</h4>
+    <hr>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Class</th>
+                    <th>Precision</th>
+                    <th>Recall</th>
+                    <th>F1-Score</th>
+                    <th>Support</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for class, metrics in prediction_report.items() %}
+                <tr>
+                    <td>{{ class }}</td>
+                    <td>{{ metrics['precision'] }}</td>
+                    <td>{{ metrics['recall'] }}</td>
+                    <td>{{ metrics['f1-score'] }}</td>
+                    <td>{{ metrics['support'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <hr>
+        <div class="d-flex">
+            <p>Accuracy Score of Test Dataset:- {{ accuracy }}%</p>
+            <p style="margin-left: 30px;">Best Moden Name:- {{ best_model_name }}</p>
+        </div>
+
+        <hr>
+    </div>
+</div>
+
+{% endif %} {% else %}
+<div class="container">
+    <h4 class="text-center">Regressor Report</h4>
+    <hr>
+    <div class="d-flex">
+        <p class="m-2">Mean Squared Error:- {{mse}}</p>
+        <p class="m-2">Mean Absoluate Error:- {{mae}}</p>
+        <p class="m-2">Root Mean Squared Error:- {{rmse}}</p>
+    </div>
+    <hr>
+    <p>Best Model Name:- {{best_model_name}}</p>
+    <hr>
+    <!-- <p>predictions:- {{predictions}}</p> -->
+</div>
+{% endif %} {% endif %}
+
+<!--download best model-->
+<div class="container">
+
+    {% if model_link %}
+    <h4>Download the Best Model:</h4>
+    <a href="{{ model_link }}" download>Download Model</a> {% endif %}
+</div>
+<!-- End of .container -->
+{% endblock %}

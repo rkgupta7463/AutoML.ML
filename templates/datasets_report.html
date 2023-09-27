@@ -1,0 +1,15 @@
+{% extends "base.html" %} {% block maincontents %}
+<div class="container">
+    <h4 class="text-center">Upload Your Dataset to get the dataset's reports</h4>
+    <div class="contain">
+        <form action="{{url_for('generate_and_display_profile')}}" method="post" enctype="multipart/form-data">
+            <div class="form-floating mb-3">
+                <input type="file" class="form-control" name="csvFile" id="csvFile" accept=".csv" required>
+                <label for="csvFile">Upload CSV file</label>
+            </div>
+            <button type="submit" class="btn btn-success my-2" id="submitBtn">Show Report</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

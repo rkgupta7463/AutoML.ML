@@ -1,0 +1,13 @@
+{% if report_html %}
+<h1 class="text-center">Dataset Report</h1>
+<div>
+    {{ report_html | safe }}
+</div>
+<!-- Add a "Go Back" button that redirects to the home page -->
+<div class="text-center">
+    <a href="{{ url_for('home') }}" class="btn btn-primary">Go Back</a> {% if report_generated %}
+    <a href="{{ url_for('download_report') }}" class="btn btn-primary">Download Report</a> {% endif %}
+
+</div>
+
+{% endif %}

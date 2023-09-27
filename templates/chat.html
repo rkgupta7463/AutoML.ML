@@ -1,0 +1,65 @@
+{% extends "base.html" %} {% block maincontents %}
+<style>
+    /* Apply CSS style to make the table scrollable */
+    
+    .table-responsive {
+        max-height: 280px;
+        /* Set the maximum height */
+        overflow-y: auto;
+        /* Enable vertical scrollbar */
+    }
+</style>
+
+<!-- Display the CSV data in a responsive table -->
+{% if table is not none %}
+<div class="container">
+    <h5 class="text-center">Your DataSet</h5>
+    <hr> {% if table is not none and table.shape[0] > 0 %}
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    {% for col in table.columns %}
+                    <th>{{ col }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in table.values %}
+                <tr>
+                    {% for val in row %}
+                    <td>{{ val }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p>No data available.</p>
+    {% endif %}
+    <a href="{{ url_for('home') }}" class="btn btn-outline-info" style="margin: auto;margin-top: auto;margin-bottom: auto;display: block;width: 250px;margin-top: 10px;margin-bottom: 15px;">Back</a>
+</div>
+{% endif %}
+
+<div class="container">
+    <h4 class="text-center">Chat with Dataset</h4>
+    <div class="contain">
+        <form action="{{url_for('chat_datasets')}}" method="post" enctype="multipart/form-data">
+            <div class="form-floating mb-3">
+                <textarea cols="5" rows="15" type="text" class="form-control" name="question" placeholder="Ask questions about your Dataset" required></textarea>
+                <label for="floatingInputGrid">Ask Questions About Your Dataset</label>
+            </div>
+            <button type="submit" class="btn btn-success my-2">Ask Questions</button>
+        </form>
+        {% if result %}
+        <div class="contain" style="margin-bottom: 22px;">
+            <h4 class="text-center">Results</h4>
+            <p class="form-control" style="background-color: #dfe2e6d9;" disabled><b>Question.</b> {{question}}</p>
+            <textarea type="text" class="form-control" name="results" disabled>{{result}}</textarea>
+        </div>
+        {% endif %}
+    </div>
+</div>
+<!-- End of .container -->
+{% endblock %}
